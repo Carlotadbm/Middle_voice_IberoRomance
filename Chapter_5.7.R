@@ -291,7 +291,7 @@ esperar_contexts$Aspectualidades <- factor(esperar_contexts$Aspectualidades,
 
 ##create plot
 ggplot(esperar_contexts, aes(x=Aspectualidades,y=prop, group=Pron_reflexivo)) + geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM in \"esperar(se)\" \ndepending on the syntactic context", x="Context", y="Frequency of the RM", fill="Reflexive Marker") +
+  labs(title="Frequency of the RM in \"esperar(se)\" \nby syntactic context", x="Context", y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + theme_classic() +scale_fill_manual(values=c('darkgrey','lightgray')) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -306,6 +306,47 @@ agentive %>%
   count(Pron_reflexivo) %>%
   mutate(total=sum(n), prop=round(n/total*100,0)) 
 
+#Fisher test with the data form the rest of the territory
+##generate table
+esperar_fisher <- agentive %>% 
+  filter(Verbo == "esperar") %>%
+  mutate(Tiempo_verbal = ifelse(Tiempo_verbal %in% c("imperativo", "Imperativo"), "Si", "No"),
+         Pron_reflexivo = ifelse(Pron_reflexivo == "RM", "Si", "No"))
+
+
+##Check whether there are duplicate places (i.e. the sample is not independent)
+###create logical vector (duplicated / not duplicate)
+duplicate_locations <- duplicated(esperar_fisher$COSERID)
+###sum TRUE values
+sum(duplicate_locations, na.rm = TRUE)
+###histogram by COSERID
+hist(count(esperar_fisher,COSERID)$n) 
+###summary by COSERID
+summary(tibble(count(esperar_fisher,COSERID)$n)) #most places have between 1-2 occurrences
+
+##create function to generate random samples that remove duplicates but keep all variables
+#dplyr functions: https://medium.com/optima-blog/writing-your-own-dplyr-functions-a1568720db0d
+random_duplicates <- function (df, group_col) {
+  df %>% group_by(.dots = lazyeval::lazy(group_col)) %>% #The lazyeval part makes the function read a column name with no quotes, tidyverse style
+    sample_n(1)
+}
+
+##Create 1000 permutations, from which we get the estimate (odd-ratio)
+ft_perm_esperar_fisher <- sapply(1:1000, function (y) {
+  
+  # Randomly chose one data point for each duplicate location
+  esperar_fisher_random1 <- random_duplicates(esperar_fisher, COSERID) 
+  
+  # Compute fisher test statistics
+  ft <- fisher.test(table(esperar_fisher_random1$Pron_reflexivo, esperar_fisher_random1$Tiempo_verbal))
+  # Extract p-values from results
+  
+  estimate <- ft$estimate
+  return(estimate)
+}) 
+
+##summary of results
+summary(ft_perm_esperar_fisher)
 
 #Animacy of the subject: RM probability for all verbs
 agentive %>% 
@@ -320,7 +361,7 @@ agentive %>%
   mutate(Total=sum(n), prop = n/sum(n)) %>% 
   ggplot(aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and animacy of the subject with \"quedar(se)\" \nby geographical area", x="Animacy of the subject", 
+  labs(title="Frequency of the RM with \"quedar(se)\" \nby geographical area and animacy of the subject", x="Animacy of the subject", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +

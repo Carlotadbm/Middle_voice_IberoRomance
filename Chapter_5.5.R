@@ -66,7 +66,7 @@ accidental %>%
   mutate(Total=sum(n), prop = n/sum(n)) %>% 
   ggplot(aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and animacy of the subject with \"caer(se)\" \nand \"morir(se)\" by geographical area", x="Animacy of the subject", 
+  labs(title="Frequency of the RM with \"caer(se)\" and \"morir(se)\" \nby geographical area and animacy of the subject", x="Animacy of the subject", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -84,7 +84,7 @@ accidental %>%
   mutate(Total=sum(n), prop = n/sum(n)) %>% 
   ggplot(aes(x=Presencia_del_dativo,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and presence of a dative of the subject with \n\"caer(se)\" and \"morir(se)\" by geographical area", x="Presence of a dative", 
+  labs(title="Frequency of the RM with \"caer(se)\" and \"morir(se)\" \nby geographical area and presence of a dative", x="Presence of a dative", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -111,7 +111,7 @@ caer_datives$Tipo_dativo <- factor(caer_datives$Tipo_dativo,
 ##create plot
 ggplot(caer_datives, aes(x=Tipo_dativo,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM by dative type with \"caer(se)\"", x="Dative type", 
+  labs(title="Frequency of the RM type with \"caer(se)\" by dative", x="Dative type", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -161,7 +161,7 @@ ggplot(spain, aes(long, lat)) +
                "Si" = "black")
   ) +
   facet_wrap(~ Video) +
-  labs(title = "Frequency of the RM in the questionnaire with \"caer(se)\"") +
+  labs(title = "Frequency of the RM with \"caer(se)\" in the questionnaire") +
   coord_fixed() +
   theme_bw() +
   theme(legend.position = c(0.96, 0.02),

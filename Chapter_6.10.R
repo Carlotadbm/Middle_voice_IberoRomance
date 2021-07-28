@@ -89,7 +89,6 @@ ggsave("movement_trans_verbs.png", height = 4, width = 6) #saves the last plot
 ##create table
 movement_animacy <- movement %>% 
   filter(Area_dialecta == "Resto") %>%
-  mutate(Pron_reflexivo = ifelse(Pron_reflexivo == "Si", "RM", "No RM")) %>%
   group_by(Animacion_sujeto, Verbo) %>%
   count(Pron_reflexivo) %>%
   mutate(Total=sum(n), prop = n/sum(n))
@@ -97,7 +96,7 @@ movement_animacy <- movement %>%
 ##create plot
 ggplot(movement_animacy, aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and subject animacy with \"llevar(se)\" and \n\"traer(se)\" in the rest of the territory", x="Verb", 
+  labs(title="Frequency of the RM with \"llevar(se)\" and \"traer(se)\" \nby subject animacy in the rest of the territory", x="Verb", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -118,7 +117,7 @@ movement_tense <- movement %>%
 
 ##create plot
 ggplot(movement_tense, aes(x=Tiempo_verbal,y=prop, group=Pron_reflexivo)) + geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and imperatives with \"llevar(se)\" and \n\"traer(se)\" in the rest of the territory", x="Verb", 
+  labs(title="Frequency of the RM with \"llevar(se)\" and \"traer(se)\" \nby verb tense in the rest of the territory", x="Verb", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + theme_classic() +scale_fill_manual(values=c('darkgrey','lightgray')) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~Verbo)
@@ -146,7 +145,7 @@ movement_loc$Compl_direccion <- factor(movement_loc$Compl_direccion, levels = c(
 ###create plot
 ggplot(movement_loc %>% filter(Verbo == "llevar"), aes(x=Compl_direccion,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and locative phrases  with \"llevar(se)\" \nin the rest of the territory", x="Locative phrase", 
+  labs(title="Frequency of the RM with \"llevar(se)\" \nby locative phrase in the rest of the territory", x="Locative phrase", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -179,7 +178,7 @@ movement_loc2$Compl_direccion <- factor(movement_loc2$Compl_direccion, levels = 
 ###create plot
 ggplot(movement_loc2, aes(x=Compl_direccion,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and locative phrases  with \n\"traer(se)\" and \"venir(se)\" in the rest of the territory", x="Locative phrase", 
+  labs(title="Frequency of the RM with \"traer(se)\" and \"venir(se)\" \nby locative phrase in the rest of the territory", x="Locative phrase", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -201,7 +200,7 @@ movement_dative <- movement %>%
 ##create plot
 ggplot(movement_dative, aes(x=Presencia_del_dativo,y=percentage, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and presence of a dative  with \n\"llevar(se)\" and \"traer(se)\" in the rest of the territory", x="Presence of a dative", 
+  labs(title="Frequency of the RM with \"llevar(se)\" and \"traer(se)\" \nby presence of a dative in the rest of the territory", x="Presence of a dative", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +

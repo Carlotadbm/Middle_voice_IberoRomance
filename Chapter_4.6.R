@@ -71,7 +71,7 @@ animacy_cor_vbs <- full_join(animacy_Anim_vbs, animacy_RM_vbs, by=c("Verbo", "Ar
 ##create plot
 ggplot(animacy_cor_vbs, aes(Anim_prob, RM_prob)) + 
   geom_point() + 
-  labs(title="Correlation between the probability of the RM and the probability of \nan animate subject by verb", x="Probability of an animate subject", y="Probability of the RM") + 
+  labs(title="Correlation between the probability of the RM and the probability of having \nan animate subject by verb", x="Probability of an animate subject", y="Probability of the RM") + 
   facet_wrap(c("Area_dialectal"))
 
 ##save plot

@@ -56,7 +56,7 @@ transitive_semantic_types %>%
 ##create plot
 ggplot(transitive_semantic_types, aes(x=reorder(Tipo_semantico, percentage, desc), y=percentage)) + 
   geom_col(aes(), position = "stack", fill = "dark grey") + 
-  labs(title="Proportion of transitive verbs per semantic type", x="Kemmer's semantic types", y="Percentage of verbs") +
+  labs(title="Proportion of transitive verbs by semantic type", x="Kemmer's semantic types", y="Percentage of verbs") +
   geom_text(aes(label = n), position = position_stack(vjust = 1)) + 
   theme_classic() + 
   scale_fill_manual(values=c('darkgrey','lightgray')) + 

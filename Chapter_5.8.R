@@ -84,7 +84,7 @@ pasar_subj$Aspectualidades <- factor(pasar_subj$Aspectualidades, levels = c("Fee
 
 ##create plot
 ggplot(pasar_subj, aes(x=Aspectualidades,y=prop, group=Pron_reflexivo)) + geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and type of subject with spontaneous \"pasar(se)\"", x="Type of subject", 
+  labs(title="Frequency of the RM with spontaneous \"pasar(se)\" by type of subject", x="Type of subject", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + theme_classic() +scale_fill_manual(values=c('darkgrey','lightgray')) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))

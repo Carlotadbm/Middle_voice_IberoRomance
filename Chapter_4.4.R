@@ -72,13 +72,6 @@ random_duplicates <- function (df, group_col) {
     sample_n(1)
 }
 
-
-
-ft$estimate
-ft$conf.int
-ft$p.value
-
-
 ##Create 1000 permutations, from which we get the estimate (odd-ratio)
 ft_perm_atelic_resto <- sapply(1:1000, function (y) {
   

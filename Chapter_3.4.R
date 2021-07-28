@@ -106,7 +106,7 @@ lm <- lm(middle_voice2_cor$Prob_RM ~ middle_voice2_cor$Prob_NVC)
 ##Plot with correlation line
 ggplot(middle_voice2_cor, aes(Prob_NVC, Prob_RM)) + 
   geom_point() + 
-  labs(title="Correlation between presence of the RM and no valency change \nby semantic category of the verb", x="Probability of no valency change", y="Probability of the RM") + 
+  labs(title="Correlation between probability of the RM and probability of showing \nno valency change by semantic category of the verb", x="Probability of no valency change", y="Probability of the RM") + 
   geom_abline(aes(intercept=  lm$coefficients[1], slope=lm$coefficients[2])) + 
   ylim(0,1) + 
   xlim(0,1) +
@@ -147,7 +147,7 @@ semantic_types <- middle_voice3 %>%
 ##create plot 
 ggplot(semantic_types, aes(x=reorder(Tipo_semantico, n, desc), y=percentage)) + 
   geom_col(aes(), position = "stack", fill = "dark grey") + 
-  labs(title="Verbs with change of diathesis per semantic type", x="Semantic types", y="Percentage of verbs") +
+  labs(title="Verbs with change of diathesis by semantic type", x="Semantic types", y="Percentage of verbs") +
   geom_text(aes(label = n), position = position_stack(vjust = 1)) + 
   theme_classic() + 
   scale_fill_manual(values=c('darkgrey','lightgray')) + 

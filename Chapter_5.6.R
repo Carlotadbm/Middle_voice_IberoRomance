@@ -9,7 +9,7 @@ library(tidyverse)
 
 #load table
 enclaves_q_todo <- read_delim("QUEST_total copia.csv", delim="\t") #questionnaire coordinates
-full_table <- read_delim("VM_fusion_blanco_revisado_3.csv", delim="\t") #COSER linguistic data
+full_table <- read_delim("VM_fusion_blanco_revisado_2.csv", delim="\t") #COSER linguistic data
 
 #clean tables
 enclaves_q_todo  <-  enclaves_q_todo %>%

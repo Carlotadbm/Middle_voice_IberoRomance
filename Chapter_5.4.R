@@ -66,7 +66,7 @@ movement %>%
   mutate(Total=sum(n), Perc = n/sum(n)*100) %>% 
   print(n = Inf)
 
-#Ir(se): locative complements 
+#Ir(se): locative adjuncts 
 ##RM probability
 movement %>% 
   filter(Verbo == "ir") %>% 
@@ -86,7 +86,7 @@ movement_animacy_montar <- movement %>%
 ###create plot
 ggplot(movement_animacy_montar, aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and subject animacy with \"subir(se)\" and \n\"bajar(se)\" by geographical area", x="Verb", 
+  labs(title="Frequency of the RM with \"subir(se)\" and \"bajar(se)\" \nby geographical area and subject animacy", x="Verb", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -108,7 +108,7 @@ movement_animacy_marchar <- movement %>%
 ###create plot
 ggplot(movement_animacy_marchar, aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and subject animacy with \"ir(se)\", \"venir(se)\" \nand \"marchar(se)\" by geographical area", x="Verb", 
+  labs(title="Frequency of the RM with \"ir(se)\", \"venir(se)\" and \"marchar(se)\" \nby geographical area and subject animacy", x="Verb", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -132,7 +132,7 @@ movement_tense_marchar <- movement %>%
 ##create plot
 ggplot(movement_tense_marchar, aes(x=Tiempo_verbal,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and imperatives with \"ir(se)\", \"venir(se)\" \nand \"marchar(se)\" by geographical area", x="Verb", 
+  labs(title="Frequency of the RM with \"ir(se)\", \"venir(se)\" and \"marchar(se)\" \nby geographical area and verb tense", x="Verb", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +scale_fill_manual(values=c('darkgrey','lightgray')) + 
@@ -173,7 +173,7 @@ movement_loc_salir$Aspectualidades <- factor(movement_loc_salir$Aspectualidades,
 ##create plot
 ggplot(movement_loc_salir, aes(x=Aspectualidades,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and locative phrases  with \"ir(se)\", \"salir(se)\" \nand \"pasar(se)\" by geographical area", x="Locative phrase", 
+  labs(title="Frequency of the RM with \"ir(se)\", \"salir(se)\" and \"pasar(se)\" \nby locative phrase and geographical area", x="Locative phrase", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
@@ -205,7 +205,7 @@ movement_loc_subir$Aspectualidades <- factor(movement_loc_subir$Aspectualidades,
 ##create plot
 ggplot(movement_loc_subir, aes(x=Aspectualidades,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM and locative phrases  with \"montar(se)\" \nand \"subir(se)\" by geographical area", x="Locative phrase", 
+  labs(title="Frequency of the RM with \"montar(se)\" and \"subir(se)\" \nby geographical area and locative phrases", x="Locative phrase", 
        y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +

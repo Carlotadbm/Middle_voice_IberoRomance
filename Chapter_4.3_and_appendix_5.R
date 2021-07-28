@@ -68,7 +68,7 @@ anticausative_ETT_cor <- full_join(anticausative_ETT_TrIntr2, anticausative_ETT_
 ##plot distribution
 ggplot(anticausative_ETT_cor, aes(Prob_trans, Prob_RM)) + 
   geom_point() + 
-  labs(title="Correlation between presence of the RM and transitive uses by verb", x="Probability of transitive uses", y="Probability of the RM")
+  labs(title="Correlation between frequency of the RM and transitive uses by verb", x="Probability of transitive uses", y="Probability of the RM")
 
 ##save plot
 ggsave("anticausative_ETT_cor.png", width = 7, height = 7) #saves the last plot

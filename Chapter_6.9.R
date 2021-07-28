@@ -109,7 +109,7 @@ ggplot(spain, aes(long, lat)) +
                "Si" = "black")
   ) +
   facet_wrap(~ Video) +
-  labs(title = "Frequency of the RM in the questionnaire with \"encontrar(se)\"") +
+  labs(title = "Frequency of the RM with \"encontrar(se)\" in the questionnaire") +
   coord_fixed() +
   theme_bw() +
   theme(legend.position = c(0.96, 0.02),
@@ -160,7 +160,7 @@ ggplot(spain, aes(long, lat)) +
                "Si" = "black")
   ) +
   facet_wrap(~ Sdo_tipic_refl) +
-  labs(title = "Frequency of the RM with \"dejar(se)\" depending on intentionality of the subject") +
+  labs(title = "Frequency of the RM with \"dejar(se)\" by intentionality of the subject") +
   coord_fixed() +
   theme_bw() +
   theme(legend.position = c(0.96, 0.02),
@@ -195,7 +195,7 @@ spain <- map_data('world', "spain")
 ggplot(spain, aes(long, lat)) +
   geom_map(map=spain, aes(map_id=region), fill="white", color="black") +
   geom_point(data = olvidar_q_mapa, aes(Longitude, Latitude, shape = Verbo, colour = Reflexivo), size = 10) +
-  labs(title = "Presence of the RM in the questionnaire in video 76 (Olvidar las llaves)") +
+  labs(title = "Presence of the RM in video 76 (Olvidar las llaves) in the questionnaire") +
   coord_fixed() +
   theme_bw() +
   scale_color_manual(values = c('lightgrey', 'gray38')) +
