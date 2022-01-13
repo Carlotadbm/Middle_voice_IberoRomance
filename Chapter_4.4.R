@@ -57,37 +57,41 @@ atelic_resto <- atelic %>%
 
 ##Check whether there are duplicate places (i.e. the sample is not independent)
 ###create logical vector (duplicated / not duplicate)
-duplicate_locations <- duplicated(atelic_resto$COSERID)
-###sum TRUE values
-sum(duplicate_locations, na.rm = TRUE)
+atelic_resto %>% 
+  count(COSERID, sort = T)
 ###histogram by COSERID
 hist(count(atelic_resto,COSERID)$n) 
 ###summary by COSERID
 summary(tibble(count(atelic_resto,COSERID)$n)) #most places have between 1-3 occurrences
 
-##create function to generate random samples that remove duplicates but keep all variables
-#dplyr functions: https://medium.com/optima-blog/writing-your-own-dplyr-functions-a1568720db0d
-random_duplicates <- function (df, group_col) {
-  df %>% group_by(.dots = lazyeval::lazy(group_col)) %>% #The lazyeval part makes the function read a column name with no quotes, tidyverse style
-    sample_n(1)
+### Bootstrapping
+#### Hierarchical bootstrap procedure to estimate the variability of a measure of association estimated from clustered data
+#### The data consist of multiple interviews, each providing a variable number of observations
+
+B = 1000
+test.stat <- numeric(B)
+test.stat[1] <- fisher.test(atelic_resto$Pron_reflexivo, atelic_resto$Tiempo_verbal)$estimate  # odds ratio from the sample
+
+####transform into factors
+atelic_resto$Pron_reflexivo <- as.factor(atelic_resto$Pron_reflexivo)
+atelic_resto$Tiempo_verbal <- as.factor(atelic_resto$Tiempo_verbal)
+
+for (k in 2:B) {
+  # resample interviews
+  interview.boot <- sample(atelic_resto$COSERID,replace=TRUE)
+  # resample indices of individual observations from each resampled interview
+  ID.boot <- unlist(sapply(interview.boot, function(i) sample(which(atelic_resto$COSERID==i),replace=TRUE) ) )
+  # Compute the statistic of interest from the data subsetted by the resampled indices
+  test.stat[k] <- fisher.test(atelic_resto$Pron_reflexivo[ID.boot],atelic_resto$Tiempo_verbal[ID.boot])$estimate
 }
 
-##Create 1000 permutations, from which we get the estimate (odd-ratio)
-ft_perm_atelic_resto <- sapply(1:1000, function (y) {
-  
-  # Randomly chose one data point for each duplicate location
-  atelic_resto_random1 <- random_duplicates(atelic_resto, COSERID) 
-  
-  # Compute fisher test statistics
-  ft <- fisher.test(table(atelic_resto_random1$Pron_reflexivo, atelic_resto_random1$Tiempo_verbal))
-  # Extract p-values from results
-  
-  estimate <- ft$estimate
-  return(estimate)
-}) 
+#### Summary of results
+hist(test.stat)
+summary(test.stat)
+quantile(test.stat,probs=c(0.025,0.975))
 
-##summary of results
-summary(ft_perm_atelic_resto)
+#### Estimate and confidence interval calculated from original data, ignoring the clustering (too narrow)
+fisher.test(atelic_resto$Pron_reflexivo, atelic_resto$Tiempo_verbal)
 
 #Comparison of all periphrasis 
 ##Clean table: Select non-finite forms only in the rest of the territory and remove causative periphrases

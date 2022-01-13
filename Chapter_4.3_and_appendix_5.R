@@ -86,7 +86,8 @@ anticausative_ETT_TrIntr3 <- anticausative_ETT_TrIntr %>%
   rename(Total_TrIntr = Total)
 
 ##join tables
-anticausative_ETT_table <- full_join(anticausative_ETT_TrIntr3, anticausative_ETT_RM3, by = "Verbo")
+anticausative_ETT_table <- full_join(anticausative_ETT_TrIntr3, anticausative_ETT_RM3, by = "Verbo") %>% 
+  mutate(across(c(5,9), round, 2))
 
 ##write table
 write_csv(anticausative_ETT_table, "anticausative_ETT_table.csv")

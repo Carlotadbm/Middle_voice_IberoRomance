@@ -65,10 +65,11 @@ model_anticausative <- glmer(Pron_reflexivo ~ Area_dialectal + Animacion_sujeto 
 ##summary statistics of model
 summary(model_anticausative)
 range(resid(model_anticausative)) 
-hist(resid(model_anticausative))#Normal distribution?
+hist(resid(model_anticausative))
 
 ##tidy model
-model_anticausative_tidy <- tidy(model_anticausative, exponentiate = F, conf.int = T) #statistic es el z-value
+model_anticausative_tidy <- tidy(model_anticausative, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write table
 write_delim(model_anticausative_tidy, "model_anticausative_tidy.csv", delim = "\t")

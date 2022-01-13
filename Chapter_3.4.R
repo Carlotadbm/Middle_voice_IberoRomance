@@ -37,10 +37,11 @@ model_voice <- glmer(Pron_reflexivo ~ Tipo_sintactico + Tipo_semantico + (1|COSE
 ##calculate model summary statistics
 summary(model_voice)
 range(resid(model_voice))
-hist(resid(model_voice)) #normal distribution?
+hist(resid(model_voice)) 
 
 ##tidy model
-model_voice_tidy <- tidy(model_voice, exponentiate = F, conf.int = T) #statistic es el z-value
+model_voice_tidy <- tidy(model_voice, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(model_voice_tidy, "model_voice_tidy.csv", delim = "\t")

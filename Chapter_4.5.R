@@ -14,7 +14,7 @@ anticausative <- read_delim("Subtabla_anticausativos2019.csv", delim=";")
 #Generate table with datives
 datives <- anticausative %>%
   filter(!is.na(Tipo_dativo)) %>% #filter out cases without datives
-  mutate(Tipo_dativo = ifelse(Tipo_dativo %in% c("Causante_afectado", "Causante_involuntario", "Afectacion_amplia"), "Cause", #redo classification
+  mutate(Tipo_dativo = ifelse(Tipo_dativo %in% c("Causante_afectado", "Causante_involuntario", "Afectacion_amplia"), "Causer", #redo classification
                               if_else(Tipo_dativo == "Posesivo_afectado", "Possessive", 
                                       ifelse(Tipo_dativo == "Destinatario", "Goal", "Experiencer"))))
 #number of examples
@@ -35,7 +35,7 @@ datives_types <- datives %>%
   mutate(total=sum(n), prop=(n/total*100))
 
 ##relevel factor
-datives_types$Tipo_dativo <- factor(datives_types$Tipo_dativo, levels = c("Experiencer", "Cause", "Goal", "Possessive"))
+datives_types$Tipo_dativo <- factor(datives_types$Tipo_dativo, levels = c("Experiencer", "Causer", "Goal", "Possessive"))
 
 #generate plot
 ggplot(datives_types, aes(x = Tipo_dativo, y= prop, group = Pron_reflexivo)) + 
