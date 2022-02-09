@@ -71,7 +71,7 @@ intransitive_exhaustive %>%
   mutate(total=sum(n), prop=(n/total*100)) %>% 
   ggplot(aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM with intransitive verbs depending \non the animacy of the subject by geographical area", x="Animacy of the subject", y="Frequency of the RM", fill="Reflexive Marker") +
+  labs(title="Frequency of the RM with intransitive verbs \nby animacy of the subject by geographical area", x="Animacy of the subject", y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
   scale_fill_manual(values=c('darkgrey','lightgray')) + 
@@ -100,7 +100,7 @@ intransitive_exhaustive %>%
   ggplot(aes(x=RM_prob)) + 
   geom_dotplot(binwidth=0.0224) + 
   scale_y_continuous(NULL, breaks = NULL) +
-  labs(title="Relative frequency of the RM by intransitive verb depending on \nanimacy of the subject and geographical area", x="Relative frequency of the RM") + 
+  labs(title="Relative frequency of the RM by intransitive verb by \nanimacy of the subject and geographical area", x="Relative frequency of the RM") + 
   facet_wrap(c("Animacion_sujeto", "Area_dialecta"))
 ##save plot
 ggsave("intransitive_exhaustive_dotplot.png", width = 6, height = 7) #saves the last plot

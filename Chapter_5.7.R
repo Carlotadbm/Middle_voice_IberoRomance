@@ -306,7 +306,7 @@ agentive %>%
   count(Pron_reflexivo) %>%
   mutate(total=sum(n), prop=round(n/total*100,0)) 
 
-#Fisher test with the data form the rest of the territory
+#Fisher test with the data from the rest of the territory
 ##generate table
 esperar_fisher <- agentive %>% 
   filter(Verbo == "esperar") %>%
@@ -316,37 +316,41 @@ esperar_fisher <- agentive %>%
 
 ##Check whether there are duplicate places (i.e. the sample is not independent)
 ###create logical vector (duplicated / not duplicate)
-duplicate_locations <- duplicated(esperar_fisher$COSERID)
-###sum TRUE values
-sum(duplicate_locations, na.rm = TRUE)
+esperar_fisher %>% 
+  count(COSERID, sort = T)
 ###histogram by COSERID
 hist(count(esperar_fisher,COSERID)$n) 
 ###summary by COSERID
 summary(tibble(count(esperar_fisher,COSERID)$n)) #most places have between 1-2 occurrences
 
-##create function to generate random samples that remove duplicates but keep all variables
-#dplyr functions: https://medium.com/optima-blog/writing-your-own-dplyr-functions-a1568720db0d
-random_duplicates <- function (df, group_col) {
-  df %>% group_by(.dots = lazyeval::lazy(group_col)) %>% #The lazyeval part makes the function read a column name with no quotes, tidyverse style
-    sample_n(1)
+### Bootstrapping
+#### Hierarchical bootstrap procedure to estimate the variability of a measure of association estimated from clustered data
+#### The data consist of multiple interviews, each providing a variable number of observations
+
+B = 1000
+test.stat <- numeric(B)
+test.stat[1] <- fisher.test(esperar_fisher$Pron_reflexivo, esperar_fisher$Tiempo_verbal)$estimate  # odds ratio from the sample
+
+####transform into factors
+esperar_fisher$Pron_reflexivo <- as.factor(esperar_fisher$Pron_reflexivo)
+esperar_fisher$Tiempo_verbal <- as.factor(esperar_fisher$Tiempo_verbal)
+
+for (k in 2:B) {
+  # resample interviews
+  interview.boot <- sample(esperar_fisher$COSERID,replace=TRUE)
+  # resample indices of individual observations from each resampled interview
+  ID.boot <- unlist(sapply(interview.boot, function(i) sample(which(esperar_fisher$COSERID==i),replace=TRUE) ) )
+  # Compute the statistic of interest from the data subsetted by the resampled indices
+  test.stat[k] <- fisher.test(esperar_fisher$Pron_reflexivo[ID.boot],esperar_fisher$Tiempo_verbal[ID.boot])$estimate
 }
 
-##Create 1000 permutations, from which we get the estimate (odd-ratio)
-ft_perm_esperar_fisher <- sapply(1:1000, function (y) {
-  
-  # Randomly chose one data point for each duplicate location
-  esperar_fisher_random1 <- random_duplicates(esperar_fisher, COSERID) 
-  
-  # Compute fisher test statistics
-  ft <- fisher.test(table(esperar_fisher_random1$Pron_reflexivo, esperar_fisher_random1$Tiempo_verbal))
-  # Extract p-values from results
-  
-  estimate <- ft$estimate
-  return(estimate)
-}) 
+#### Summary of results
+hist(test.stat)
+summary(test.stat)
+quantile(test.stat,probs=c(0.025,0.975))
 
-##summary of results
-summary(ft_perm_esperar_fisher)
+#### Estimate and confidence interval calculated from original data, ignoring the clustering (too narrow)
+fisher.test(esperar_fisher$Pron_reflexivo, esperar_fisher$Tiempo_verbal)
 
 #Animacy of the subject: RM probability for all verbs
 agentive %>% 
@@ -396,11 +400,10 @@ agentive_model <- glmer(Pron_reflexivo ~ Animacion_sujeto + (1|Verbo) + (1|COSER
 
 ##calculate model summary statistics
 summary(agentive_model)
-range(resid(agentive_model))
-hist(resid(agentive_model)) #normal distribution?
 
 ##tidy model
-agentive_model_tidy <- tidy(agentive_model, exponentiate = F, conf.int = T) #statistic es el z-value
+agentive_model_tidy <- tidy(agentive_model, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(agentive_model_tidy, "5.7_agentive_model_tidy.csv", delim = "\t")

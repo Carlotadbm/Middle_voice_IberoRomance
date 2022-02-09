@@ -1,5 +1,0 @@
-effect	group	term	estimate	std.error	statistic	p.value	conf.low	conf.high
-fixed	NA	(Intercept)	-1.716	0.087	-19.71	0	-1.887	-1.546
-fixed	NA	Tipo_sintacticoValency_change	2.941	0.043	68.071	0	2.856	3.025
-fixed	NA	Tipo_semanticoKemmers	-0.029	0.043	-0.684	0.494	-0.114	0.055
-ran_pars	COSERID	sd__(Intercept)	0.626	NA	NA	NA	NA	NA

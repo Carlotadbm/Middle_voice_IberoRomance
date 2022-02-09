@@ -1,7 +1,0 @@
-effect	group	term	estimate	std.error	statistic	p.value	conf.low	conf.high
-fixed	NA	(Intercept)	-0.478	0.125	-3.816	0	-0.724	-0.233
-fixed	NA	Area_dialectalNorthwest	-1.433	0.25	-5.739	0	-1.922	-0.943
-fixed	NA	Animacion_sujetoAnimate	0.96	0.093	10.378	0	0.779	1.141
-fixed	NA	Presencia_del_dativoDat	0.933	0.248	3.768	0	0.448	1.418
-fixed	NA	Prob_trans	3.816	0.184	20.762	0	3.456	4.176
-ran_pars	COSERID	sd__(Intercept)	0.701	NA	NA	NA	NA	NA

@@ -30,7 +30,7 @@ antic_animacy <- animacy %>%
 ##create plot
 ggplot(antic_animacy, aes(x=Animacion_sujeto,y=prop, group=Pron_reflexivo)) + 
   geom_col(aes(fill=Pron_reflexivo), position = "fill") + 
-  labs(title="Frequency of the RM with anticausative verbs depending \non the animacy of the subject by geographical area", x="Animacy of the subject", y="Frequency of the RM", fill="Reflexive Marker") +
+  labs(title="Frequency of the RM with anticausative verbs by \nanimacy of the subject by geographical area", x="Animacy of the subject", y="Frequency of the RM", fill="Reflexive Marker") +
   geom_text(aes(label = n), position = position_fill(vjust = .5)) + 
   theme_classic() +
   scale_fill_manual(values=c('darkgrey','lightgray')) + 
@@ -97,7 +97,7 @@ animacy_boxplot %>%
 ##create boxplot
 ggplot(animacy_boxplot, aes(x=Animacion_sujeto, y=RM_prob)) + 
   geom_boxplot() +
-  labs(title="Relative frequency of the RM by verb depending on \nanimacy of the subject and geographical area", x="Animacy of the subject", y="Relative frequency of the RM") + 
+  labs(title="Relative frequency of the RM by verb by \nanimacy of the subject and geographical area", x="Animacy of the subject", y="Relative frequency of the RM") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   ylim(0,1) + 
   facet_wrap(c("Area_dialectal"))
@@ -132,7 +132,7 @@ animacy_boxplot %>%
   ggplot(aes(x=RM_prob)) + 
   geom_dotplot(binwidth=0.0224) + 
   scale_y_continuous(NULL, breaks = NULL) +
-  labs(title="Relative frequency of the RM by intransitive verb depending on \nanimacy of the subject and geographical area", x="Relative frequency of the RM") + 
+  labs(title="Relative frequency of the RM by anticausative verb by \nanimacy of the subject and geographical area", x="Relative frequency of the RM") + 
   facet_wrap(c("Animacion_sujeto", "Area_dialectal"))
 
 #save plot

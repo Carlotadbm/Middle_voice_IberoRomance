@@ -43,7 +43,7 @@ sintactica %>%
   mutate(total = sum(n))
 
 
-#Frequent verbs: llevar, trater, ir & venir
+#Frequent verbs: llevar, traer, ir & venir
 ##create table with transitive verbs
 movement <- transitive_exh %>%
   filter(Verbo %in% c("llevar", "traer"), 
@@ -251,11 +251,10 @@ movement1_model <- glmer(Pron_reflexivo ~ Animacion_sujeto + Tiempo_verbal + Ver
 
 ##calculate model summary statistics
 summary(movement1_model)
-range(resid(movement1_model))
-hist(resid(movement1_model)) #normal distribution?
 
 ##tidy model
-movement1_model_tidy <- tidy(movement1_model, exponentiate = F, conf.int = T) #statistic es el z-value
+movement1_model_tidy <- tidy(movement1_model, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(movement1_model_tidy, "6.10_trans_movement_model_tidy.csv", delim = "\t")

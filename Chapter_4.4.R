@@ -56,7 +56,6 @@ atelic_resto <- atelic %>%
   mutate(Tiempo_verbal = ifelse(Tiempo_verbal == "finite", "Si", "No")) #Rename variables so that positive cases: finite & RM; non-finite & No RM
 
 ##Check whether there are duplicate places (i.e. the sample is not independent)
-###create logical vector (duplicated / not duplicate)
 atelic_resto %>% 
   count(COSERID, sort = T)
 ###histogram by COSERID

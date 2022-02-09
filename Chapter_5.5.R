@@ -193,11 +193,10 @@ accidental_model <- glmer(Pron_reflexivo ~ Animacion_sujeto + Presencia_del_dati
 
 ##calculate model summary statistics
 summary(accidental_model)
-range(resid(accidental_model))
-hist(resid(accidental_model)) #normal distribution?
 
 ##tidy model
-accidental_model_tidy <- tidy(accidental_model, exponentiate = F, conf.int = T) #statistic es el z-value
+accidental_model_tidy <- tidy(accidental_model, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(accidental_model_tidy, "5.5_accidental_model_tidy.csv", delim = "\t")

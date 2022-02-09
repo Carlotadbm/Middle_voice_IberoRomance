@@ -36,8 +36,6 @@ model_voice <- glmer(Pron_reflexivo ~ Tipo_sintactico + Tipo_semantico + (1|COSE
 
 ##calculate model summary statistics
 summary(model_voice)
-range(resid(model_voice))
-hist(resid(model_voice)) 
 
 ##tidy model
 model_voice_tidy <- tidy(model_voice, exponentiate = F, conf.int = T) %>% 

@@ -234,11 +234,10 @@ movement_model <- glmer(Pron_reflexivo ~ Animacion_sujeto + Tiempo_verbal + (1|C
 
 ##calculate model summary statistics
 summary(movement_model)
-range(resid(movement_model)) #normal distribution?
-hist(resid(movement_model)) #normal distribution?
 
 ##tidy model
-movement_model_tidy <- tidy(movement_model, exponentiate = F, conf.int = T) #statistic es el z-value
+movement_model_tidy <- tidy(movement_model, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(movement_model_tidy, "5.4_movement_model_tidy.csv", delim = "\t")

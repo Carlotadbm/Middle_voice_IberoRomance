@@ -64,8 +64,6 @@ model_anticausative <- glmer(Pron_reflexivo ~ Area_dialectal + Animacion_sujeto 
 
 ##summary statistics of model
 summary(model_anticausative)
-range(resid(model_anticausative)) 
-hist(resid(model_anticausative))
 
 ##tidy model
 model_anticausative_tidy <- tidy(model_anticausative, exponentiate = F, conf.int = T) %>% 

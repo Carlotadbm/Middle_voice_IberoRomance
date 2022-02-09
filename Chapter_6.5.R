@@ -6,6 +6,8 @@
 
 #load library
 library(tidyverse)
+library(lme4)
+library(broom.mixed)
 
 #load table
 sintactica <- read_delim("VM_fusion_blanco_revisado_3.csv", delim="\t") 
@@ -123,11 +125,10 @@ consumption_model <- glmer(Pron_reflexivo ~ Aspectualidades + (1|Verbo) + (1|COS
 
 ##calculate model summary statistics
 summary(consumption_model)
-range(resid(consumption_model))
-hist(resid(consumption_model)) #normal distribution?
 
 ##tidy model
-consumption_model_tidy <- tidy(consumption_model, exponentiate = F, conf.int = T) #statistic es el z-value
+consumption_model_tidy <- tidy(consumption_model, exponentiate = F, conf.int = T) %>% 
+  mutate(across(4:9, round, 3))
 
 ##write model
 write_delim(consumption_model_tidy, "6.5_consumption_model_tidy.csv", delim = "\t")
